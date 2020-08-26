@@ -144,7 +144,7 @@ def test_drag_and_drop(session,
 
 
 @pytest.mark.parametrize("drag_duration", [0, 300, 800])
-def test_drag_and_drop_with_draggable_element(session,
+def test_drag_and_drop_with_draggable_element(session_new_window,
                        test_actions_page,
                        mouse_chain,
                        drag_duration):
@@ -164,6 +164,7 @@ def test_drag_and_drop_with_draggable_element(session,
         .perform()
     # mouseup that ends the drag is at the expected destination
     e = get_events(session)
+    assert len(e) >= 5
     assert e[1]["type"] == "dragstart", "Events captured were {}".format(e)
     assert e[2]["type"] == "dragover", "Events captured were {}".format(e)
     drag_events_captured = [ev["type"] for ev in e if ev["type"].startswith("drag") or ev["type"].startswith("drop")]
